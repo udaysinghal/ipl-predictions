@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Match Predictor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        .form-select, .form-control {
+            margin-bottom: 15px;
+        }
+        .btn {
+            background-color: #ffcc00;
+            color: black;
+            font-weight: bold;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container col-md-6">
+        <h1 class="mb-4">🏏 IPL Match Winning Predictor</h1>
+        <form method="POST">
+            <label>Batting Team:</label>
+            <select class="form-select" name="batting_team" required>
+                {% for team in teams %}
+                    <option value="{{ team }}">{{ team }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Bowling Team:</label>
+            <select class="form-select" name="bowling_team" required>
+                {% for team in teams %}
+                    <option value="{{ team }}">{{ team }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Match Venue:</label>
+            <select class="form-select" name="venue" required>
+                {% for venue in venues %}
+                    <option value="{{ venue }}">{{ venue }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Has the match started?</label>
+            <select class="form-select" name="match_started" id="match_started" required>
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+
+            <div id="live_match_fields" style="display: none;">
+                <label>Runs Left:</label>
+                <input type="number" class="form-control" name="runs_left">
+
+                <label>Balls Left:</label>
+                <input type="number" class="form-control" name="balls_left">
+
+                <label>Wickets Left:</label>
+                <input type="number" class="form-control" name="wickets_left">
+
+                <label>Current Run Rate:</label>
+                <input type="number" step="0.01" class="form-control" name="current_run_rate">
+
+                <label>Required Run Rate:</label>
+                <input type="number" step="0.01" class="form-control" name="required_run_rate">
+
+                <label>Target Score:</label>
+                <input type="number" class="form-control" name="target">
+            </div>
+
+            <button type="submit" class="btn btn-lg mt-3">Predict</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("match_started").addEventListener("change", function() {
+            document.getElementById("live_match_fields").style.display = this.value === "yes" ? "block" : "none";
+        });
+    </script>
+
+</body>
+</html>
