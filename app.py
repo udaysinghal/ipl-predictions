@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import joblib
 import pandas as pd
+import os
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -74,4 +75,5 @@ def index():
     return render_template("index.html", teams=teams, venues=venues)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
